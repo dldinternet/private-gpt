@@ -1,12 +1,9 @@
-name: Create and publish a Docker image
+name: docker
 
 on:
   release:
     types: [ published ]
-  push:
-    branches:
-      - main
-  pull_request:
+  workflow_dispatch:
 
 env:
   REGISTRY: ghcr.io
@@ -42,6 +39,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
+          file: Dockerfile.external
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
